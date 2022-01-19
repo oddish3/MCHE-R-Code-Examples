@@ -28,10 +28,10 @@ library("rriskDistributions")
 #Lets look at where we have some data first
 #We'll begin with some very minimal expert elicitation I have done as 
 #a part of a study. I have readings from two people for various
-#variables and want to turn them in to distributions.
+#variables and want to turn them into distributions.
 
 #The first variable is how long it takes to manually send a breast scan
-#if the system fails. One person said 5-10 minutes and the other 5 mins
+#if the automated system fails. One person said 5-10 minutes and the other 5 mins
 #Lets take the mid-point of the first range (7.5) and assume the time
 #is normally distributed (more likely Gamma or log-normal but harder
 #to estimate these with two observation)
@@ -65,12 +65,14 @@ plot(density(numscreens[,1]))
 #normal and normal just for an illustration
 
 #Lets start with the normal
+#note that we're going to save it as an object so we can play
+#around with the results
 normscreen<-fitdist(numscreens[,1],"norm")
 
-#And lets check the fit (AIC/BIC stats)
+#lets check the fit (AIC/BIC stats)
 summary(normscreen)
 
-#What does the distribution look like vs the data
+#What does the distribution look like vs the data?
 #hmm not great
 denscomp(list(normscreen))
 
@@ -87,5 +89,18 @@ denscomp(list(normscreen,gammascreen,lnormscreen))
 #Still not perfect but the best of these three
 
 
+#Fitting data when you have a mean and confidence intervals
+#Its nice to have real data but sometimes we might have used
+#published estimates in our model and we need to try and work
+#out how to characterise the distribution. For this we can use
+#rriskdistributions to approximate the distributions
 
+#Lets say we have a parameter we think is normally distributed with mean
+#7.5 and CIs of 5 and 10.
+#we can use the get.norm.par function with arguments p= a vector of centiles
+#(we assume they use CIs at 0.05 significance and 2 tails) and q= the vector
+#of values for those centiles. I.e. here the 2.5th centile (lower CI) has a value
+#of 5, the median (0.5) a value of 7.5, and 97.5th centile a value of 10
 get.norm.par(p=c(0.025,0.5,0.975),q=c(5,7.5,10))
+
+
