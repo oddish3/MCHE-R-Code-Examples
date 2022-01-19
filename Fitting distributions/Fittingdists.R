@@ -15,7 +15,7 @@
 #centiles and mean
 
 #Set your directory
-setwd("C:/Users/mdxassw4/Documents/GitHub/MCHE-R-Code-Examples")
+setwd("")
 
 #Install required packages
 install.packages("fitdistrplus")
