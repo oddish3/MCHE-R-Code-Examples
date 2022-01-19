@@ -91,16 +91,17 @@ denscomp(list(normscreen,gammascreen,lnormscreen))
 
 #Fitting data when you have a mean and confidence intervals
 #Its nice to have real data but sometimes we might have used
-#published estimates in our model and we need to try and work
-#out how to characterise the distribution. For this we can use
-#rriskdistributions to approximate the distributions
+#published estimates in our model and we need to try and
+#work out how to characterise the distribution. For this we
+#can use rriskdistributions to approximate the distributions
 
-#Lets say we have a parameter we think is normally distributed with mean
-#7.5 and CIs of 5 and 10.
-#we can use the get.norm.par function with arguments p= a vector of centiles
-#(we assume they use CIs at 0.05 significance and 2 tails) and q= the vector
-#of values for those centiles. I.e. here the 2.5th centile (lower CI) has a value
-#of 5, the median (0.5) a value of 7.5, and 97.5th centile a value of 10
+#Lets say we have a parameter we think is normally distributed
+#with mean 7.5 and CIs of 5 and 10.
+#We can use the get.norm.par function with arguments p= 
+#a vector of centiles (we assume they use CIs at 0.05 
+#significance and 2 tails) and q= the vector of values for 
+#those centiles. I.e. here the 2.5th centile (lower CI) has
+#a value of 5, the median (0.5) a value of 7.5, and 97.5th 
+#centile a value of 10
 get.norm.par(p=c(0.025,0.5,0.975),q=c(5,7.5,10))
-
 
