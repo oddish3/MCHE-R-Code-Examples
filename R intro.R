@@ -7,7 +7,7 @@
 25^7
 9*(7/3)
 
-#You can create variables and assign values to them with <- or ==
+#You can create variables and assign values to them with <- or =
 utilitystable=0.86
 utilitystable<-0.77 #Note, this will overwrite the above value
 sayhi<-"Hello" #We can also use text in objects using speech marks
@@ -24,13 +24,14 @@ print(utility)
 
 #We can call specific elements of the vector by using square brackets
 utility[3]
+utility["Severe"]
 
 #We can do mathematical operations on whole vectors
 monthlyutility<-utility/12
 print(monthlyutility)
 
 #Or specific elements in the vector. Lets reduce healthy to 0.95
-utility[1]<-0.95
+utility["Healthy"]<-0.95
 print(utility) #Note we'd have to rerun our monthly utility calculation above (Order is important!)
 
 #We can also use data frames. These are essentially tables or a collection of vectors
@@ -49,6 +50,9 @@ print(table)
 #What does that look like on a scatter plot?
 plot(table[,1],table[,2],xlab="Column 1",ylab="Column 2")
 
+#col="red"
+#xlim=c(-5,15)
+
 #How do oyu do an OLS regression of column 2 as a function of column 1?
 model<-lm(table[,2]~table[,1]) #lm = linear model
 summary(model) #Should give a coefficient which is roughly 2
@@ -61,6 +65,7 @@ print(coefficients) #This is now a vector so we can get the intercept and B1
 
 plot(table[,1],table[,2],xlab="Column 1",ylab="Column 2")
 abline(a=coefficients[1],b=coefficients[2],col="red")
+
 #Or we can also use just use abline(coef=coefficients)
 #You can also use abline to put in lines at y=0 and x=0 
 #Useful if the graph is scaled in a funny way like in a cost-effectiveness plane
