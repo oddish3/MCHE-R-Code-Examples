@@ -1,3 +1,7 @@
+#This script currently demonstrates how to make a simply Markov model with
+#PSA in R. It currently only shows the comparator arm but I'll work to add an 
+#intervention. I'll also save a deterministic version
+
 #Define number of cycles and total population
 ncycles<-20
 nstates<-4
@@ -5,9 +9,12 @@ n<-1000
 discountrate<-0.035
 mcruns<-1000
 
+#Set-up a matrix to record the PSA runs
 outputs<-matrix(ncol=2,
                 nrow=mcruns)
 colnames(outputs)<-c("costs","qalys")
+
+#Open the PSA loop
 for (j in 1:mcruns){
 
 #Define transition probabilities for comparator making sure they sum to 1
@@ -45,6 +52,7 @@ transmatcomp<-matrix(c(probAtoA,probAtoB,probAtoC,probAtoD,
                        0,0,0,1),
                      nrow=4,byrow=T)
 
+#Add state names to rows and columns
 rownames(transmatcomp)<-colnames(transmatcomp)<-statenames
 
 #Define starting distribution
@@ -57,15 +65,16 @@ markovtracecomp<-matrix(data=NA,
                     dimnames=list(NULL,statenames))
 markovtracecomp[1,]<-startdist
 
-#Creat list of transitions
+#Create list of transitions
 translistcomp<-list()
 
-#Run markov model
+#Run markov model to fill the trace
 for (i in 1:ncycles){
   markovtracecomp[1+i,]<-markovtracecomp[i,] %*% transmatcomp
   translistcomp[[i]]<-markovtracecomp[i,]*transmatcomp
 }
 
+#Change the matrix into a data frame as this is easier to work with
 markovtracecomp<-as.data.frame(markovtracecomp)
 
 #Add costs
